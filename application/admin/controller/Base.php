@@ -7,6 +7,7 @@ class Base extends Controller
     {
         $this->assign('controller',$this->request->controller());
         $this->assign('action',$this->request->action());
+        $this->assign('headtitle','');
         $this->assign('description','');
     }
 }
