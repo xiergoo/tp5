@@ -1,5 +1,6 @@
 <?php
 return [
+    //'url_route_on'=>false,
     //分页配置
     'paginate'               => [
         'type'      => 'bootstrap',

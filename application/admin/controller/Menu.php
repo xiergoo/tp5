@@ -17,7 +17,7 @@ class Menu extends Base
     public function index()
     {
         $html='';
-        $list = $this->menu->where(['id'=>200, 'pid'=>0,'hide'=>0])->order('sort')->select();
+        $list = $this->menu->where(['pid'=>0,'hide'=>0])->order('sort')->select();
         foreach ($list as $li)
         {
         	$html.=$this->createMenu($li);
@@ -30,7 +30,7 @@ class Menu extends Base
         if($menu && $menu->id>0){
             $listSubMenu=$this->menu->where(['pid'=>$menu->id])->order('sort')->select();
             if($listSubMenu){
-                $html='<li>
+                $html='<li id="menu_'.$menu->id.'">
                     <a href="'.url($menu->url).'" class="dropdown-toggle">
                         <i class="'.$menu->icon.'"></i>
                         <span class="menu-text">
@@ -48,7 +48,8 @@ class Menu extends Base
                 $html.='</ul></li>';
                 
             }else{
-                $html='<li>
+                list($controller,$action)=explode('/',$menu->url,2);
+                $html='<li id="'.$controller.'_'.$action.'" pmid="'.$menu->pid.'">
                         <a href="'.url($menu->url).'">
                             <i class="'.$menu->icon.'"></i>
                             <span class="menu-text"> '.$menu->name.' </span>
@@ -60,100 +61,4 @@ class Menu extends Base
         return $html;
     }
     
-    private function createSubMenu($menu){
-        die;
-        $html='';
-        if($menu->id>0){
-            $list = $this->menu->where(['pid'=>$menu->id,'hide'=>0])->select();
-            $html='
-                    <ul class="submenu">
-                        <li class="">
-                            <a href="#" class="dropdown-toggle">
-                                <i class="menu-icon fa fa-caret-right"></i>
-
-                                Layouts
-                                <b class="arrow fa fa-angle-down"></b>
-                            </a>
-
-                            <b class="arrow"></b>
-
-                            <ul class="submenu">
-                                <li class="">
-                                    <a href="top-menu.html">
-                                        <i class="menu-icon fa fa-caret-right"></i>
-                                        Top Menu
-                                    </a>
-
-                                    <b class="arrow"></b>
-                                </li>
-
-                                <li class="">
-                                    <a href="two-menu-1.html">
-                                        <i class="menu-icon fa fa-caret-right"></i>
-                                        Two Menus 1
-                                    </a>
-
-                                    <b class="arrow"></b>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="">
-                            <a href="#" class="dropdown-toggle">
-                                <i class="menu-icon fa fa-caret-right"></i>
-
-                                Three Level Menu
-                                <b class="arrow fa fa-angle-down"></b>
-                            </a>
-
-                            <b class="arrow"></b>
-
-                            <ul class="submenu">
-                                <li class="">
-                                    <a href="#">
-                                        <i class="menu-icon fa fa-leaf green"></i>
-                                        Item #1
-                                    </a>
-
-                                    <b class="arrow"></b>
-                                </li>
-
-                                <li class="">
-                                    <a href="#" class="dropdown-toggle">
-                                        <i class="menu-icon fa fa-pencil orange"></i>
-
-                                        4th level
-                                        <b class="arrow fa fa-angle-down"></b>
-                                    </a>
-
-                                    <b class="arrow"></b>
-
-                                    <ul class="submenu">
-                                        <li class="">
-                                            <a href="#">
-                                                <i class="menu-icon fa fa-plus purple"></i>
-                                                Add Product
-                                            </a>
-
-                                            <b class="arrow"></b>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="#">
-                                                <i class="menu-icon fa fa-eye pink"></i>
-                                                View Products
-                                            </a>
-
-                                            <b class="arrow"></b>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>';
-            
-            
-        }
-        return $html;
-    }
 }
