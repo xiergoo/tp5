@@ -19,6 +19,7 @@
     <Folder Include="application\" />
     <Folder Include="application\admin\controller\" />
     <Folder Include="application\admin\model\" />
+    <Folder Include="application\admin\logic\" />
     <Folder Include="application\admin\view\" />
     <Folder Include="application\admin\view\index\" />
     <Folder Include="application\admin\view\public\" />
@@ -67,6 +68,8 @@
     <Folder Include="thinkphp\library\think\console\output\formatter\" />
     <Folder Include="thinkphp\library\think\console\output\question\" />
     <Folder Include="thinkphp\library\think\controller\" />
+    <Folder Include="thinkphp\library\think\Crypt\" />
+    <Folder Include="thinkphp\library\think\Crypt\Driver\" />
     <Folder Include="thinkphp\library\think\db\" />
     <Folder Include="thinkphp\library\think\db\builder\" />
     <Folder Include="thinkphp\library\think\db\connector\" />
@@ -99,9 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="application\admin\config.php" />
+    <Compile Include="application\admin\controller\Role.php" />
     <Compile Include="application\admin\controller\Base.php" />
+    <Compile Include="application\admin\controller\Admin.php" />
     <Compile Include="application\admin\controller\Menu.php" />
     <Compile Include="application\admin\controller\Index.php" />
+    <Compile Include="application\admin\logic\Admin.php" />
     <Compile Include="application\admin\model\Menu.php" />
     <Compile Include="application\command.php" />
     <Compile Include="application\common.php" />
@@ -169,6 +175,11 @@
     <Compile Include="thinkphp\library\think\controller\Rest.php" />
     <Compile Include="thinkphp\library\think\controller\Yar.php" />
     <Compile Include="thinkphp\library\think\Cookie.php" />
+    <Compile Include="thinkphp\library\think\Crypt\Driver\Base64.class.php" />
+    <Compile Include="thinkphp\library\think\Crypt\Driver\Crypt.class.php" />
+    <Compile Include="thinkphp\library\think\Crypt\Driver\Des.class.php" />
+    <Compile Include="thinkphp\library\think\Crypt\Driver\Think.class.php" />
+    <Compile Include="thinkphp\library\think\Crypt\Driver\Xxtea.class.php" />
     <Compile Include="thinkphp\library\think\Db.php" />
     <Compile Include="thinkphp\library\think\db\Builder.php" />
     <Compile Include="thinkphp\library\think\db\builder\Mysql.php" />
@@ -261,8 +272,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="application\admin\view\index\index.html" />
-    <Content Include="application\admin\view\public\footer.html" />
-    <Content Include="application\admin\view\public\header.html" />
     <Content Include="application\admin\view\public\base.html" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\robots.txt" />

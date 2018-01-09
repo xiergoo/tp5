@@ -11,5 +11,10 @@ return [
     '__STATIC__'    =>'/static/',
     '__JS__'       =>'/static/assets/js/',
     '__CSS__'      => '/static/assets/css/',
-]
+    ],
+    //加密配置
+    'crypt'               => [
+        'type'      => 'Think',
+        'prefix'=>'tp5_admin',
+    ],
 ];

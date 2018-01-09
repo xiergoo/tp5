@@ -236,4 +236,9 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    //加密配置
+    'crypt'               => [
+        'type'      => 'Think',
+        'prefix'=>'tp5',
+    ],
 ];
