@@ -5,7 +5,7 @@
  * @param mixed $salt_len 盐长度，默认6位
  * @return mixed
  */
-function hashPassword($password, $salt_len = 6)
+function hashPassword($password, $salt_len = 4)
 {
     if (!$password) {
         $salt = '';
@@ -28,5 +28,5 @@ function hashPassword($password, $salt_len = 6)
  */
 function getHashPassword($password, $salt)
 {
-    return md5($salt.md5($password));
+    return md5($salt.md5($password.$salt));
 }
