@@ -20,6 +20,7 @@ class Base extends Controller
         $this->log();
         $this->assign('controller',$this->request->controller());
         $this->assign('action',$this->request->action());
+        $this->assign('displayname',$this->adminInfo['displayname']);
         $this->assign('headtitle','');
         $this->assign('description','');
     }
