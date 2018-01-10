@@ -11,6 +11,8 @@ class Base extends Controller
             $response = redirect('Common/login')->remember();            
             throw new \think\Exception\HttpResponseException($response);
         }
+        $this->adminID=intval($adminInfo['id']);
+        defined('ADMIN_ID') or define('ADMIN_ID',$this->adminID);
         //$this->checkRole();
         $this->assign('controller',$this->request->controller());
         $this->assign('action',$this->request->action());
@@ -23,7 +25,17 @@ class Base extends Controller
         $data = session($this->sessionKey);
         if($data){
             $data=\think\Crypt::decrypt($data,$this->sessionKey);
+            if($data){
+                $data=json_decode($data,true);
+            }
         }
         return $data;
+    }
+    protected function setLoginAdmin($adminInfo){
+        if($adminInfo['id']>0){
+            session($this->sessionKey, \think\Crypt::encrypt(json_encode($adminInfo),$this->sessionKey));
+        }elseif($adminInfo===null){
+            session($this->sessionKey,null);
+        }
     }
 }
