@@ -21,7 +21,7 @@ class Common extends Base
                 $this->error($logicAdmin->getError());
             }
             $this->setLoginAdmin($adminInfo);
-            redirect()->restore();
+            return redirect()->restore();
         }else{
             return $this->fetch();
         }
