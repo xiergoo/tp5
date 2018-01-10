@@ -19,8 +19,9 @@ class Common extends Base
             $adminInfo = $logicAdmin->login($username,$password,'1234');
             if(!$adminInfo){
                 $this->error($logicAdmin->getError());
-            }$this->setLoginAdmin($adminInfo);
-            $this->redirect('Index/index');
+            }
+            $this->setLoginAdmin($adminInfo);
+            redirect()->restore();
         }else{
             return $this->fetch();
         }
