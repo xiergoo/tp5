@@ -23,8 +23,14 @@ class Base extends Controller
         $this->assign('description','');
     }
     
-    protected function checkRole(){
-        $menuInfo = \app\admin\model\Menu::get(['url'=>$this->request->controller().'/'.$this->request->action()]);
+    protected function checkRole($controller='',$action=''){
+        if(!$controller){
+            $controller=$this->request->controller();
+        }
+        if(!$action){
+            $action=$this->request->action();
+        }
+        $menuInfo = \app\admin\model\Menu::get(['url'=>$controller.'/'.$action]);
         return validateMenu($this->adminInfo['role_id'],$menuInfo->id);
     }
         
