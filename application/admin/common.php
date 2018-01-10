@@ -30,3 +30,17 @@ function getHashPassword($password, $salt)
 {
     return md5($salt.md5($password.$salt));
 }
+
+function validateMenu($roleID,$menuID){
+    if($roleID>0 && $menuID>0){
+        if($roleID==1){
+            return true;
+        }
+        static $roleModel = null;
+        if($roleModel===null){            
+            $roleModel = app\admin\model\Role::get($roleID);
+        }
+        return in_array($menuID, explode(',',$roleModel->menu_set));
+    }
+    return false;
+}

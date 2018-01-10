@@ -4,22 +4,30 @@ use think\Controller;
 class Base extends Controller
 {
     protected $adminID=0;
+    protected $adminInfo=null;
     public function _initialize()
     {
-        $adminInfo = $this->getLoginAdmin();
-        if($adminInfo['id']<=0){
-            $response = redirect('Common/login')->remember();            
+        $this->adminInfo = $this->getLoginAdmin();
+        if($this->adminInfo['id']<=0){
+            $response = redirect('Common/login')->remember();
             throw new \think\Exception\HttpResponseException($response);
         }
-        $this->adminID=intval($adminInfo['id']);
+        $this->adminID=intval($this->adminInfo['id']);
         defined('ADMIN_ID') or define('ADMIN_ID',$this->adminID);
-        //$this->checkRole();
+        if(!$this->checkRole()){
+            $this->error('没有权限',url('Index/index'));
+        }
         $this->assign('controller',$this->request->controller());
         $this->assign('action',$this->request->action());
         $this->assign('headtitle','');
         $this->assign('description','');
     }
     
+    protected function checkRole(){
+        $menuInfo = \app\admin\model\Menu::get(['url'=>$this->request->controller().'/'.$this->request->action()]);
+        return validateMenu($this->adminInfo['role_id'],$menuInfo->id);
+    }
+        
     private $sessionKey='adminLogicLoginUser';
     protected function getLoginAdmin(){
         $data = session($this->sessionKey);

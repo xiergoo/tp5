@@ -28,6 +28,9 @@ class Menu extends Base
     private function createMenu($menu){
         $html='';
         if($menu && $menu->id>0){
+            if(!validateMenu($this->adminInfo['role_id'],$menu->id)){
+                return '';
+            }
             $listSubMenu=$this->menu->where(['pid'=>$menu->id])->order('sort')->select();
             if($listSubMenu){
                 $html='<li id="menu_'.$menu->id.'">
