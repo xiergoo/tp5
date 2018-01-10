@@ -17,6 +17,7 @@ class Base extends Controller
         if(!$this->checkRole()){
             $this->error('没有权限',url('Index/index'));
         }
+        $this->log();
         $this->assign('controller',$this->request->controller());
         $this->assign('action',$this->request->action());
         $this->assign('headtitle','');
@@ -51,5 +52,13 @@ class Base extends Controller
         }elseif($adminInfo===null){
             session($this->sessionKey,null);
         }
+    }
+    protected function log(){
+	    $message = 'Admin: '.$this->adminID.'|'.$this->adminInfo['username'].'|RoleID'.$this->adminInfo['role_id'].PHP_EOL;
+	    $message .= 'User-Agent:'.$_SERVER['HTTP_USER_AGENT'].PHP_EOL;
+	    $message .= 'Request-Method:'.$_SERVER['REQUEST_METHOD'].PHP_EOL;
+	    $message .= 'Request-Params:'.urldecode(http_build_query($_REQUEST)).PHP_EOL;
+	    $message .= 'Params:'.json_encode($this->request->param());
+        \think\Log::write($message);
     }
 }
