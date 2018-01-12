@@ -23,6 +23,7 @@
     <Folder Include="application\admin\validate\" />
     <Folder Include="application\admin\view\" />
     <Folder Include="application\admin\view\index\" />
+    <Folder Include="application\admin\view\common\" />
     <Folder Include="application\admin\view\public\" />
     <Folder Include="application\index\" />
     <Folder Include="application\index\controller\" />
@@ -111,6 +112,8 @@
     <Compile Include="application\admin\controller\Menu.php" />
     <Compile Include="application\admin\controller\Index.php" />
     <Compile Include="application\admin\logic\Admin.php" />
+    <Compile Include="application\admin\model\Admin.php" />
+    <Compile Include="application\admin\model\Role.php" />
     <Compile Include="application\admin\model\Menu.php" />
     <Compile Include="application\admin\validate\Admin.php" />
     <Compile Include="application\command.php" />
@@ -276,6 +279,7 @@
     <Compile Include="thinkphp\start.php" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="application\admin\view\common\login.html" />
     <Content Include="application\admin\view\index\index.html" />
     <Content Include="application\admin\view\public\base.html" />
     <Content Include="public\favicon.ico" />
