@@ -32,8 +32,8 @@ class Base extends Controller
         if(!$action){
             $action=$this->request->action();
         }
-        $menuInfo = \app\admin\model\Menu::get(['url'=>$controller.'/'.$action]);
-        return validateMenu($this->adminInfo['role_id'],$menuInfo->id);
+        $menuInfo = db('menu')->where(['url'=>$controller.'/'.$action])->find();
+        return validateMenu($this->adminInfo['role_id'],$menuInfo['id']);
     }
         
     private $sessionKey='adminLogicLoginUser';

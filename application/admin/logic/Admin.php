@@ -19,21 +19,21 @@ class Admin extends Model
             $this->error='验证码错误';
             return false;
         }
-        $adminModel = \app\admin\model\Admin::get(['username'=>$username]);        
-        if($adminModel->id<=0){            
+        $info = db('admin')->where(['username'=>$username])->find();
+        if($info['id']<=0){            
             $this->error='帐号不存在';
             return false;
         }        
-        if(getHashPassword($password,$adminModel->salt)==$adminModel->password){
-            if($adminModel->status!=1){
+        if(getHashPassword($password,$info['salt'])==$info['password']){
+            if($info['status']!=1){
                 $this->error='帐号已禁用';
                 return false;
             }
-            $adminModel->login_ip=request()->ip();
-            $adminModel->login_time=time();
-            $adminModel->login_times=intval($adminModel->login_times)+1;
-            $adminModel->save();
-            return $adminModel->visible(['id','username','displayname','role_id'])->toArray();
+            $update['login_ip']=request()->ip();
+            $update['login_time']=time();
+            $update['login_times']=intval($info['login_times'])+1;
+            \think\Db::name('admin')->where(['id'=>$info['id']])->update($update);
+            return ['id'=>$info['id'],'username'=>$info['username'],'displayname'=>$info['displayname'],'role_id'=>$info['role_id']];
         }else{
             $this->error='密码错误';
             return false;

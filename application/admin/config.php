@@ -1,6 +1,6 @@
 <?php
 return [
-    //'url_route_on'=>false,
+    'url_route_on'=>false,
     //分页配置
     'paginate'               => [
         'type'      => 'bootstrap',
@@ -22,7 +22,11 @@ return [
     // +----------------------------------------------------------------------
 
     'log'                    => [
+        // 日志记录方式，内置 file socket 支持扩展
+        'type'  => 'File',
         // 日志保存目录
         'path'  => LOG_PATH.'admin'.DS,
+        // 日志记录级别
+        'level' => [],
     ],
 ];

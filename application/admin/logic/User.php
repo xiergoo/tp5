@@ -12,7 +12,6 @@ Class User extends Model{
     const MACH_MIN_UID=12000;
     const MACH_MAX_UID=13000;
     
-    protected $table_name='user';
     protected $fields=['id','openid','nickname','headimgurl','gender','subscribe','subscribetime','ivt_uid','limits','mobile','score','login_ip','login_time','create_time']; 
     
     public function Register($user){
