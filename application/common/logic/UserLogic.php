@@ -1,7 +1,7 @@
 <?php
-namespace app\admin\logic;
+namespace app\common\logic;
 use think\Model;
-Class User extends Model{
+Class UserLogic extends Model{
     const LIMIT_LOGIN=1;
     const LIMIT_DAKA=2;
     const LIMIT_ORDER=3;
@@ -39,7 +39,7 @@ Class User extends Model{
         return \think\Db::name('user')->insert($data);
     }    
     
-    public function checkLimits($userID,$limit=User::LIMIT_LOGIN){
+    public function checkLimits($userID,$limit=UserLogic::LIMIT_LOGIN){
         $info = db('user')->where(['id'=>$userID])->cache(false)->find();
         if(!$info){
             return false;

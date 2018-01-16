@@ -15,7 +15,7 @@ class Common extends Base
         if($this->request->isPost()){
             $username=$this->request->post('username','','trim');
             $password=$this->request->post('password','','trim');
-            $logicAdmin = \think\Loader::model('Admin','logic');
+            $logicAdmin = new \app\common\logic\AdminLogic();
             $adminInfo = $logicAdmin->login($username,$password,'1234');
             if(!$adminInfo){
                 $this->error($logicAdmin->getError());

@@ -1,16 +1,15 @@
 <?php
-namespace app\admin\logic;
-use think\Model;
-class Admin extends Model
+namespace app\common\logic;
+use app\common\validate\AdminValidate;
+class AdminLogic
 {
-    protected $readonly = ['id','create_time'];
     public function login($username,$password,$verifycode){
         $data = [
             'username'=>$username,
             'password'=>$password,
             'verifycode'=>$verifycode
         ];
-        $validate = \think\Loader::validate('Admin');
+        $validate = new AdminValidate();
         if(!$validate->check($data,[],'login')){
             $this->error=$validate->getError();
             return false;

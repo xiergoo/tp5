@@ -1,8 +1,8 @@
 <?php
-namespace app\admin\logic;
+namespace app\common\logic;
 use think\Model;
-use app\admin\logic\User;
-Class Score extends Model{
+use app\common\logic\UserLogic;
+Class ScoreLogic extends Model{
     const TYPE_RECHARGE=1;
     const TYPE_ORDER=2;
     const TYPE_DAKA=3;
@@ -11,9 +11,7 @@ Class Score extends Model{
     const TYPE_OUT=6;
     const TYPE_SEND=7;
     
-    const DAKA_SCORE=10;
-    
-    protected $fields=['id','uid','type','params','score','mark','create_time'];
+    const DAKA_SCORE=10;    
     
     public function types($type=''){
         $types = [
@@ -45,8 +43,8 @@ Class Score extends Model{
             $this->error='无效的uid';
             return false;
         }
-        $logicUser = new User();
-        if(!$logicUser->checkLimits($uid,User::LIMIT_DAKA)){
+        $logicUser = new UserLogic();
+        if(!$logicUser->checkLimits($uid,UserLogic::LIMIT_DAKA)){
             $this->error='您不能这么做';
             return false;
         }
@@ -64,8 +62,8 @@ Class Score extends Model{
             $this->error='无效的uid';
             return false;
         }
-        $logicUser = new User();
-        if(!$logicUser->checkLimits($uid,User::LIMIT_SCORE_RECHARGE)){
+        $logicUser = new UserLogic();
+        if(!$logicUser->checkLimits($uid,UserLogic::LIMIT_SCORE_RECHARGE)){
             $this->error='您不能这么做';
             return false;
         }
@@ -108,7 +106,7 @@ Class Score extends Model{
                 $data['ctime']=time();
                 $result = \think\Db::name('score')->insert($data);
                 if($result){
-                    $logicUser = \think\Loader::model('User','logic');
+                    $logicUser = new UserLogic();
                     $result = $logicUser->exchangeSocre($uid,$score);
                     if($result){
                         return true;
@@ -130,7 +128,7 @@ Class Score extends Model{
             $data['ctime']=time();
             $result = \think\Db::name('score')->insert($data);
             if($result){
-                $logicUser = \think\Loader::model('User','logic');
+                $logicUser = new UserLogic();
                 $result = $logicUser->exchangeSocre($uid,$score);
                 if($result){
                     return true;
@@ -155,8 +153,8 @@ Class Score extends Model{
             $this->error='无效的uid';
             return false;
         }
-        $logicUser = new User();
-        if(!$logicUser->checkLimits($uid,User::LIMIT_SCORE_OUT)){
+        $logicUser = new UserLogic();
+        if(!$logicUser->checkLimits($uid,UserLogic::LIMIT_SCORE_OUT)){
             $this->error='您不能这么做';
             return false;
         }
@@ -165,7 +163,7 @@ Class Score extends Model{
             $this->error='无效的目标uid';
             return false;
         }
-        if(!$logicUser->checkLimits($to_uid,User::LIMIT_SCORE_IN)){
+        if(!$logicUser->checkLimits($to_uid,UserLogic::LIMIT_SCORE_IN)){
             $this->error='您不能这么做.';
             return false;
         }

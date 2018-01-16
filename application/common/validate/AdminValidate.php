@@ -1,8 +1,8 @@
 <?php
-namespace app\admin\validate;
+namespace app\common\validate;
 use think\Model;
 use think\Validate;
-class Admin extends Validate
+class AdminValidate extends Validate
 {
     protected $rule = [
         'username|用户名'  =>  'require|min:5|max:20',
