@@ -20,9 +20,8 @@ Class User extends Model{
             return false;
         }
         $openid=$user['openid'];
-        $modelUser = new \app\admin\model\User();
-        $modelUser = $modelUser->where(['openid'=>$openid])->find();
-        if($modelUser && $modelUser->id>0){
+        $info = \think\Db::name('user')->where(['openid'=>$openid])->find();
+        if($info && $info['id']>0){
             $this->error='用户已存在';
             return false;
         }
@@ -37,21 +36,15 @@ Class User extends Model{
             'limits'=>'1111110000',
 			'create_time' => time()
 		);
-        $modelUser = new \app\admin\model\User();
-        $result = $modelUser->save($data);
-        if($result){
-            return $modelUser;
-        }else{
-            return false;
-        }
+        return \think\Db::name('user')->insert($data);
     }    
     
-    public function checkLimits($userID,$limit=userClass::limit_login){
-        $modelUser = \app\admin\model\User::get($userID);
-        if(!$modelUser){
+    public function checkLimits($userID,$limit=User::LIMIT_LOGIN){
+        $info = db('user')->where(['id'=>$userID])->cache(false)->find();
+        if(!$info){
             return false;
         }
-        return substr($modelUser->limits,$limit-1,1)==1;
+        return substr($info['limits'],$limit-1,1)==1;
     }
     
     public function limits($limit=''){
@@ -84,18 +77,16 @@ Class User extends Model{
     
     public function getScore($userID){
         if($userID>0){
-            $modelUser = \app\admin\model\User::get($userID);
-            if($modelUser){
-                return intval($modelUser->score);
+            $info = db('user')->where(['id'=>$userID])->find();
+            if($info){
+                return intval($info['score']);
             }
         }
         return 0;
     }
     
     public function exchangeSocre($userID,$score){
-        $modelUser = \app\admin\model\User::get($userID);
-        return $modelUser && $modelUser->setInc('score',$score);
-    }
-    
+        return db('user')->where(['id'=>$userID])->setInc('score',$score);
+    }    
 }
 ?>
