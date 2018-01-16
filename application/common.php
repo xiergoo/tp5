@@ -56,3 +56,59 @@ function getUniqueCode($len = 8)
     ) ;
     return $d;
 }
+
+
+/**
+ * curl post方法请求
+ * @param string $url 请求目标地址
+ * @param array|string $data post数据
+ * @return string 请求结果
+ **/
+function httpPost($url, $data) {
+    $header = array (
+        'Accept:*/*',
+        'Accept-Charset:utf-8;q=0.7,*;q=0.3',
+        'Accept-Encoding:gzip,deflate,sdch',
+        'Accept-Language:zh-CN,zh;q=0.8',
+        'Connection:keep-alive',
+        'Host:' . '',
+        'Origin:' . '',
+        'Referer:' . '',
+        'X-Requested-With:XMLHttpRequest'
+    );
+    $curl = curl_init (); // 启动一个curl会话
+    curl_setopt ( $curl, CURLOPT_URL, $url ); // 要访问的地址
+    curl_setopt ( $curl, CURLOPT_HTTPHEADER, http_build_query ( $header ) ); // 设置HTTP头字段的数组
+    curl_setopt ( $curl, CURLOPT_SSL_VERIFYPEER, 0 ); // 对认证证书来源的检查
+    curl_setopt ( $curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/23.0'); // 模拟用户使用的浏览器
+    curl_setopt ( $curl, CURLOPT_FOLLOWLOCATION, 1 ); // 使用自动跳转
+    curl_setopt ( $curl, CURLOPT_AUTOREFERER, 1 ); // 自动设置Referer
+    curl_setopt ( $curl, CURLOPT_POST, 1 ); // 发送一个常规的Post请求
+    curl_setopt ( $curl, CURLOPT_POSTFIELDS, $data ); // Post提交的数据包
+    curl_setopt ( $curl, CURLOPT_COOKIE, '' ); // 读取储存的Cookie信息
+    curl_setopt ( $curl, CURLOPT_TIMEOUT, 20 ); // 设置超时限制防止死循环
+    curl_setopt ( $curl, CURLOPT_HEADER, 0 ); // 显示返回的Header区域内容
+    curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, 1 ); // 获取的信息以文件流的形式返回
+    $result = curl_exec ( $curl ); // 执行一个curl会话
+    curl_close ( $curl ); // 关闭curl
+    return $result;
+}
+
+/**
+ * curl get方法请求
+ * @param $url
+ * @param int $timeout
+ * @return mixed
+ */
+function httpGet($url, $timeout=15){ // 模拟获取内容函数
+    $curl = curl_init(); // 启动一个CURL会话
+    curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转
+    curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer
+    curl_setopt($curl, CURLOPT_HTTPGET, 1); // 发送一个常规的GET请求
+    curl_setopt($curl, CURLOPT_TIMEOUT, $timeout); // 设置超时限制防止死循环
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
+    $result = curl_exec ( $curl ); // 执行一个curl会话
+    curl_close ( $curl ); // 关闭curl
+    return $result;
+}

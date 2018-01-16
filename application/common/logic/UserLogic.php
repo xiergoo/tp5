@@ -1,7 +1,6 @@
 <?php
 namespace app\common\logic;
-use think\Model;
-Class UserLogic extends Model{
+Class UserLogic{
     const LIMIT_LOGIN=1;
     const LIMIT_DAKA=2;
     const LIMIT_ORDER=3;
@@ -11,9 +10,7 @@ Class UserLogic extends Model{
     //7、8、9、10保留，暂未使用
     const MACH_MIN_UID=12000;
     const MACH_MAX_UID=13000;
-    
-    protected $fields=['id','openid','nickname','headimgurl','gender','subscribe','subscribetime','ivt_uid','limits','mobile','score','login_ip','login_time','create_time']; 
-    
+        
     public function Register($user){
         if(!isset($user['openid'])||!$user['openid']){
             $this->error='无效的openid';
