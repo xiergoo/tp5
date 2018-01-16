@@ -106,8 +106,7 @@ Class Score extends Model{
                 $data['score']=$score;
                 $data['mark']=$mark;
                 $data['ctime']=time();
-                $modelScore = new \app\admin\model\Score();
-                $result = $modelScore->save($data);
+                $result = \think\Db::name('score')->insert($data);
                 if($result){
                     $logicUser = \think\Loader::model('User','logic');
                     $result = $logicUser->exchangeSocre($uid,$score);
@@ -129,8 +128,7 @@ Class Score extends Model{
             $data['score']=$score;
             $data['mark']=$mark;
             $data['ctime']=time();
-            $modelScore = new \app\admin\model\Score();
-            $result = $modelScore->save($data);
+            $result = \think\Db::name('score')->insert($data);
             if($result){
                 $logicUser = \think\Loader::model('User','logic');
                 $result = $logicUser->exchangeSocre($uid,$score);
@@ -189,8 +187,7 @@ Class Score extends Model{
             $data['score']=0-$score['score'];
             $data['mark']='转出';
             $data['ctime']=time();
-            $modelScore = new \app\admin\model\Score();
-            $result = $modelScore->save($data);
+            $result = \think\Db::name('score')->insert($data);
             if($result){
                 $data=[];
                 $data['uid']=$to_uid;
@@ -199,8 +196,7 @@ Class Score extends Model{
                 $data['score']=$score['score'];
                 $data['mark']='转入';
                 $data['ctime']=time();
-                $modelScore = new \app\admin\model\Score();
-                $result = $modelScore->save($data);
+                $result = \think\Db::name('score')->insert($data);
             }
             if($result){
                 return true;
@@ -213,7 +209,7 @@ Class Score extends Model{
     public function getScore($uid){        
         $score=0;
         if($uid>0){
-            $score = db('user')->where(['uid'=>$uid])->sum('score');
+            $score = db('score')->where(['uid'=>$uid])->sum('score');
         }
         return intval($score);
     }        
